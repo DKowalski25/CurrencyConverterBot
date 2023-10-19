@@ -13,11 +13,11 @@ engine = create_engine(
 )
 
 
-Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-def get_session() -> Session:
-    session = Session()
+def get_session() -> SessionLocal:
+    session = SessionLocal()
     try:
         yield session
     finally:
