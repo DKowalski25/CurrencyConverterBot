@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter
 from fastapi import Depends
 
@@ -12,10 +14,17 @@ router = APIRouter(
 )
 
 
-@router.get('/', response_model=list[Currency])
-def get_currency(db: CurrencyService = Depends(get_session)):
+@router.get('/', response_model=List[Currency])
+def get_currency_list(db: CurrencyService = Depends(get_session)):
     currencies = CurrencyService(db)
     return currencies.get_list(db)
+
+
+@router.get('/{currency_id}', response_model=Currency)
+def get_currency(currency_id: int, db: CurrencyService = Depends(get_session)):
+    currency = CurrencyService(db)
+    return currency.get_currency(currency_id, db)
+
 
 
 
